@@ -3,558 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Race Planner</title>
+    <meta name="description" content="Professional Race Planner">
+    <title>Race Planner</title>
+    <link rel="stylesheet" href="/src/css/main.css">
+    <link rel="stylesheet" href="/src/css/themes/light.css">
+    <link rel="stylesheet" href="/src/css/themes/dark.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/src/css/components/race-card.css">
+    <link rel="stylesheet" href="/src/css/components/metabolism-panel.css">
+    <link rel="stylesheet" href="/src/css/components/map-panel.css">
+    <link rel="stylesheet" href="/src/css/components/nutrition-planner.css">
+    <link rel="stylesheet" href="/src/css/components/fluid-calculator.css">
+    <link rel="stylesheet" href="/src/css/components/gear-list.css">
+    <link rel="stylesheet" href="/src/css/components/race-analysis.css">
+    <link rel="icon" type="image/svg+xml" href="/public/logo.svg">
 </head>
-<body>
+<body class="light-theme">
     <div class="app-container">
         <header>
             <div class="logo-container">
-                <img src="logo.svg" alt="Race Planner Logo" class="logo">
-                <h1>Race Planner Pro</h1>
+                <img src="/public/logo.svg" alt="Race Planner Logo" class="logo">
+                <h1>Race Planner</h1>
             </div>
-            <div class="user-controls">
-                <button class="btn save-btn"><i class="fas fa-save"></i> Save</button>
-                <button class="btn export-btn"><i class="fas fa-file-export"></i> Export</button>
-                <button class="btn print-btn"><i class="fas fa-print"></i> Print</button>
+            <div class="header-controls">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="user-profile">
+                    <img src="/src/assets/images/user-avatar.svg" alt="User Avatar">
+                </div>
             </div>
         </header>
 
-        <nav class="side-nav">
-            <ul>
-                <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</li>
-                <li data-section="metabolism"><i class="fas fa-heartbeat"></i> Metabolism</li>
-                <li data-section="gear"><i class="fas fa-tshirt"></i> Gear</li>
-                <li data-section="race-plan"><i class="fas fa-route"></i> Race Plan</li>
-                <li data-section="protocol"><i class="fas fa-file-medical"></i> Protocol</li>
-                <li data-section="nutrition"><i class="fas fa-utensils"></i> Nutrition</li>
-                <li data-section="fluid"><i class="fas fa-tint"></i> Fluid</li>
-                <li data-section="calories"><i class="fas fa-calculator"></i> Calories</li>
-                <li data-section="analysis"><i class="fas fa-chart-line"></i> Analysis</li>
-            </ul>
-        </nav>
+        <main>
+            <div class="sidebar">
+                <nav class="main-nav">
+                    <ul>
+                        <li class="active"><a href="#dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#metabolism"><i class="fas fa-heartbeat"></i> Metabolism</a></li>
+                        <li><a href="#gear"><i class="fas fa-tshirt"></i> Gear</a></li>
+                        <li><a href="#race-plan"><i class="fas fa-route"></i> Race Plan</a></li>
+                        <li><a href="#nutrition"><i class="fas fa-utensils"></i> Nutrition</a></li>
+                        <li><a href="#fluid"><i class="fas fa-tint"></i> Fluid</a></li>
+                        <li><a href="#analysis"><i class="fas fa-chart-line"></i> Analysis</a></li>
+                    </ul>
+                </nav>
+            </div>
 
-        <main class="content">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="active">
-                <div class="dashboard-header">
-                    <h2>Race Overview</h2>
-                    <div class="race-profile">
-                        <img src="profile-placeholder.jpg" alt="Race Profile" class="profile-img">
-                        <button class="btn upload-btn"><i class="fas fa-upload"></i> Upload</button>
-                    </div>
-                </div>
-                
-                <div class="dashboard-grid">
-                    <div class="card">
-                        <h3>Race Details</h3>
-                        <div class="form-group">
-                            <label for="race-name">Race Name</label>
-                            <input type="text" id="race-name" placeholder="Enter race name">
-                        </div>
-                        <div class="form-group">
-                            <label for="race-date">Date</label>
-                            <input type="date" id="race-date">
-                        </div>
-                        <div class="form-group">
-                            <label for="race-location">Location</label>
-                            <input type="text" id="race-location" placeholder="Enter location">
-                        </div>
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="active">
+                    <div class="page-header">
+                        <h2>Race Overview</h2>
+                        <button class="add-race-btn"><i class="fas fa-plus"></i> New Race</button>
                     </div>
                     
-                    <div class="card">
-                        <h3>Key Metrics</h3>
-                        <div class="metric">
-                            <span class="metric-label">Duration</span>
-                            <span class="metric-value">14h</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Total Calories</span>
-                            <span class="metric-value">5,600</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Estimated Carbs</span>
-                            <span class="metric-value">320g</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Fluid Loss</span>
-                            <span class="metric-value">1%</span>
-                        </div>
+                    <div class="race-list">
+                        <!-- Race cards will be dynamically generated here -->
                     </div>
                     
-                    <div class="card">
-                        <h3>Weather Forecast</h3>
-                        <div class="weather-widget">
-                            <div class="temperature">22°C</div>
-                            <div class="conditions">Sunny</div>
-                            <div class="humidity">45% Humidity</div>
-                            <div class="wind">10 km/h Wind</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Metabolism Section -->
-            <section id="metabolism">
-                <h2>Exercise Metabolism</h2>
-                <div class="card">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="duration">Race Duration (hours)</label>
-                            <input type="number" id="duration" min="1" max="24">
-                        </div>
-                        <div class="form-group">
-                            <label for="intensity">Intensity Zone</label>
-                            <select id="intensity">
-                                <option value="z1">Z1 (Very Light)</option>
-                                <option value="z2">Z2 (Light)</option>
-                                <option value="z3" selected>Z3 (Moderate)</option>
-                                <option value="z4">Z4 (Hard)</option>
-                                <option value="z5">Z5 (Maximal)</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="cal-per-hour">Calories per Hour</label>
-                            <input type="number" id="cal-per-hour" min="100" max="1000">
-                        </div>
-                        <div class="form-group">
-                            <label for="cho-per-hour">Carbs per Hour (g)</label>
-                            <input type="number" id="cho-per-hour" min="10" max="150">
-                        </div>
-                        <div class="form-group">
-                            <label for="fat-per-hour">Fat per Hour (g)</label>
-                            <input type="number" id="fat-per-hour" min="1" max="50">
-                        </div>
-                    </div>
-                    
-                    <div class="chart-container">
-                        <canvas id="substrateChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Gear Section -->
-            <section id="gear">
-                <h2>Gear Planning</h2>
-                <div class="card">
-                    <div class="tabs">
-                        <button class="tab-btn active" data-tab="mandatory">Mandatory Gear</button>
-                        <button class="tab-btn" data-tab="optional">Optional Gear</button>
-                    </div>
-                    
-                    <div id="mandatory" class="tab-content active">
-                        <div class="gear-list">
-                            <!-- Mandatory gear items will be added here -->
-                        </div>
-                        <button class="btn add-gear-btn"><i class="fas fa-plus"></i> Add Gear Item</button>
-                    </div>
-                    
-                    <div id="optional" class="tab-content">
-                        <div class="gear-list">
-                            <!-- Optional gear items will be added here -->
-                        </div>
-                        <button class="btn add-gear-btn"><i class="fas fa-plus"></i> Add Gear Item</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Race Plan Section -->
-            <section id="race-plan">
-                <h2>Race Plan</h2>
-                <div class="card">
-                    <div class="form-group">
-                        <label for="race-profile">Upload Race Profile</label>
-                        <input type="file" id="race-profile" accept=".gpx,.tcx,.fit">
-                        <button class="btn upload-profile-btn">Upload Profile</button>
-                    </div>
-                    
-                    <div class="race-route-map">
-                        <div id="map" class="map-container"></div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="start-time">Start Time</label>
-                            <input type="datetime-local" id="start-time">
-                        </div>
-                        <div class="form-group">
-                            <label for="flat-speed">Flat Speed (min/km)</label>
-                            <input type="text" id="flat-speed" placeholder="e.g., 0:05:30">
-                        </div>
-                    </div>
-                    
-                    <div class="race-segments">
-                        <h3>Race Segments</h3>
-                        <div class="segments-container">
-                            <!-- Race segments will be added here -->
-                        </div>
-                        <button class="btn add-segment-btn"><i class="fas fa-plus"></i> Add Segment</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Protocol Section -->
-            <section id="protocol">
-                <h2>Race Protocol</h2>
-                <div class="card">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="athlete-weight">Athlete Weight (kg)</label>
-                            <input type="number" id="athlete-weight" min="30" max="150" step="0.1">
-                        </div>
-                        <div class="form-group">
-                            <label for="substrate">Substrate (g/kg)</label>
-                            <input type="number" id="substrate" min="0" max="5" step="0.1">
-                        </div>
-                    </div>
-                    
-                    <div class="timeline">
-                        <h3>Pre-Race Timeline</h3>
-                        <div class="timeline-container">
-                            <div class="timeline-item">
-                                <span class="time">-3 days</span>
-                                <textarea placeholder="Notes for 3 days before race"></textarea>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="time">-1 day</span>
-                                <textarea placeholder="Notes for day before race"></textarea>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="time">-3h</span>
-                                <textarea placeholder="Notes for 3 hours before race"></textarea>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="time">-2h</span>
-                                <textarea placeholder="Notes for 2 hours before race"></textarea>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="time">-1h</span>
-                                <textarea placeholder="Notes for 1 hour before race"></textarea>
-                            </div>
-                            <div class="timeline-item">
-                                <span class="time">-30'</span>
-                                <textarea placeholder="Notes for 30 minutes before race"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="post-race">
-                        <h3>Post-Race Protocol</h3>
-                        <div class="form-group">
-                            <label for="recovery">Recovery Protocol</label>
-                            <textarea id="recovery" rows="4" placeholder="Enter post-race recovery plan"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Nutrition Section -->
-            <section id="nutrition">
-                <h2>Nutrition Planning</h2>
-                <div class="card">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="carbs-strategy">Carbohydrate Strategy</label>
-                            <select id="carbs-strategy">
-                                <option value="standard">Standard (60g/h)</option>
-                                <option value="high">High (90g/h)</option>
-                                <option value="personal">Custom</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="sweat-rate">Sweat Rate (% loss per hour)</label>
-                            <input type="number" id="sweat-rate" min="0" max="5" step="0.1">
-                        </div>
-                    </div>
-                    
-                    <div class="nutrition-options">
-                        <h3>Nutrition Products</h3>
-                        <div class="nutrition-grid">
-                            <div class="nutrition-item">
-                                <img src="gels.png" alt="Energy Gels">
-                                <h4>Energy Gels</h4>
-                                <div class="nutrition-details">
-                                    <span>40g carbs</span>
-                                    <span>100 calories</span>
-                                </div>
-                                <button class="btn add-nutrition-btn">Add</button>
-                            </div>
-                            <div class="nutrition-item">
-                                <img src="drink.png" alt="Sports Drink">
-                                <h4>Sports Drink</h4>
-                                <div class="nutrition-details">
-                                    <span>320g carbs</span>
-                                    <span>500ml</span>
-                                </div>
-                                <button class="btn add-nutrition-btn">Add</button>
-                            </div>
-                            <div class="nutrition-item">
-                                <img src="bars.png" alt="Energy Bars">
-                                <h4>Energy Bars</h4>
-                                <div class="nutrition-details">
-                                    <span>50g carbs</span>
-                                    <span>250 calories</span>
-                                </div>
-                                <button class="btn add-nutrition-btn">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="nutrition-plan">
-                        <h3>Hourly Nutrition Plan</h3>
-                        <table class="nutrition-table">
-                            <thead>
-                                <tr>
-                                    <th>Hour</th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Carbs (g)</th>
-                                    <th>Calories</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="nutrition-table-body">
-                                <!-- Nutrition plan items will be added here -->
-                            </tbody>
-                        </table>
-                        <div class="nutrition-summary">
-                            <div class="summary-item">
-                                <span>Total Carbs:</span>
-                                <span>0g</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Total Calories:</span>
-                                <span>0cal</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Fluid Section -->
-            <section id="fluid">
-                <h2>Fluid Requirements</h2>
-                <div class="card">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="temperature">Temperature (°C)</label>
-                            <input type="number" id="temperature" min="-10" max="50">
-                        </div>
-                        <div class="form-group">
-                            <label for="humidity">Humidity (%)</label>
-                            <input type="number" id="humidity" min="0" max="100">
-                        </div>
-                        <div class="form-group">
-                            <label for="exercise-duration">Exercise Duration (hours)</label>
-                            <input type="number" id="exercise-duration" min="0.5" max="24" step="0.5">
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fluid-intake">Hourly Fluid Intake (ml)</label>
-                            <input type="number" id="fluid-intake" min="100" max="1500">
-                        </div>
-                        <div class="form-group">
-                            <label for="sodium-intake">Sodium per liter (mg)</label>
-                            <input type="number" id="sodium-intake" min="0" max="1000">
-                        </div>
-                    </div>
-                    
-                    <div class="fluid-summary">
-                        <div class="summary-card">
-                            <h3>Estimated Needs</h3>
-                            <div class="summary-item">
-                                <span>Total Fluid:</span>
-                                <span>0 ml</span>
-                            </div>
-                            <div class="summary-item">
-                                <span>Total Sodium:</span>
-                                <span>0 mg</span>
+                    <div class="dashboard-widgets">
+                        <div class="widget weather-widget">
+                            <h3>Weather Forecast</h3>
+                            <div class="weather-content">
+                                <!-- Weather data will be loaded here -->
                             </div>
                         </div>
                         
-                        <div class="summary-card">
-                            <h3>Hydration Strategy</h3>
-                            <p id="hydration-strategy">Hydration strategy will appear here based on your inputs.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="fluid-chart-container">
-                        <canvas id="fluidChart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Calories Section -->
-            <section id="calories">
-                <h2>Calorie Counter</h2>
-                <div class="card">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="food-search">Search Food</label>
-                            <input type="text" id="food-search" placeholder="Search database...">
-                        </div>
-                    </div>
-                    
-                    <div class="food-item-container">
-                        <div class="food-item">
-                            <img src="potatoes.jpg" alt="Boiled Potatoes">
-                            <div class="food-details">
-                                <h4>Boiled Potatoes</h4>
-                                <p>230 kcal | 54g carbs | 4g protein</p>
+                        <div class="widget training-load-widget">
+                            <h3>Training Load</h3>
+                            <div class="chart-container">
+                                <!-- Training load chart will be rendered here -->
                             </div>
-                            <div class="food-quantity">
-                                <input type="number" min="1" value="1">
-                                <select>
-                                    <option>1 potato</option>
-                                    <option>100g</option>
-                                    <option>200g</option>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Metabolism Section -->
+                <section id="metabolism">
+                    <div class="page-header">
+                        <h2>Exercise Metabolism</h2>
+                    </div>
+                    
+                    <div class="metabolism-panel">
+                        <div class="input-panel">
+                            <div class="form-group">
+                                <label for="race-duration">Race Duration (hours)</label>
+                                <input type="number" id="race-duration" min="0.5" step="0.5">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="intensity-zone">Intensity Zone</label>
+                                <select id="intensity-zone">
+                                    <option value="z1">Zone 1 (Recovery)</option>
+                                    <option value="z2">Zone 2 (Aerobic)</option>
+                                    <option value="z3">Zone 3 (Tempo)</option>
+                                    <option value="z4">Zone 4 (Threshold)</option>
+                                    <option value="z5">Zone 5 (VO2 Max)</option>
                                 </select>
-                                <button class="btn add-food-btn">Add</button>
                             </div>
-                        </div>
-                        <!-- More food items would be added here -->
-                    </div>
-                    
-                    <div class="meal-plan">
-                        <h3>Meal Plan</h3>
-                        <div class="meal-tabs">
-                            <button class="meal-tab-btn active" data-meal="breakfast">Breakfast</button>
-                            <button class="meal-tab-btn" data-meal="lunch">Lunch</button>
-                            <button class="meal-tab-btn" data-meal="dinner">Dinner</button>
-                            <button class="meal-tab-btn" data-meal="snacks">Snacks</button>
                         </div>
                         
-                        <div id="breakfast" class="meal-tab-content active">
-                            <div class="meal-items">
-                                <!-- Breakfast items will be added here -->
+                        <div class="result-panel">
+                            <div class="calorie-estimator">
+                                <h3>Caloric Needs</h3>
+                                <div class="result-item">
+                                    <span>Total Calories</span>
+                                    <span id="total-calories">0</span>
+                                </div>
+                                <div class="result-item">
+                                    <span>Calories per Hour</span>
+                                    <span id="calories-per-hour">0</span>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Other meal tabs would follow the same structure -->
-                    </div>
-                    
-                    <div class="calorie-summary">
-                        <h3>Calorie Summary</h3>
-                        <div class="summary-grid">
-                            <div class="summary-card">
-                                <h4>Total Calories</h4>
-                                <span>895 kcal</span>
-                            </div>
-                            <div class="summary-card">
-                                <h4>Carbohydrates</h4>
-                                <span>151g</span>
-                            </div>
-                            <div class="summary-card">
-                                <h4>Protein</h4>
-                                <span>15g</span>
-                            </div>
-                            <div class="summary-card">
-                                <h4>Fat</h4>
-                                <span>31g</span>
+                            
+                            <div class="substrate-balance">
+                                <h3>Energy Substrates</h3>
+                                <div class="chart-container">
+                                    <canvas id="substrate-chart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <!-- Analysis Section -->
-            <section id="analysis">
-                <h2>Performance Analysis</h2>
-                <div class="card">
+                <!-- Gear Section -->
+                <section id="gear">
+                    <div class="page-header">
+                        <h2>Gear Planning</h2>
+                    </div>
+                    
+                    <div class="gear-tabs">
+                        <button class="gear-tab active" data-tab="mandatory">Mandatory</button>
+                        <button class="gear-tab" data-tab="optional">Optional</button>
+                    </div>
+                    
+                    <div class="gear-content">
+                        <div class="gear-list mandatory-gear active">
+                            <!-- Mandatory gear items will be listed here -->
+                        </div>
+                        
+                        <div class="gear-list optional-gear">
+                            <!-- Optional gear items will be listed here -->
+                        </div>
+                    </div>
+                    
+                    <button class="add-gear-btn"><i class="fas fa-plus"></i> Add Gear Item</button>
+                </section>
+
+                <!-- Race Plan Section -->
+                <section id="race-plan">
+                    <div class="page-header">
+                        <h2>Race Plan</h2>
+                    </div>
+                    
+                    <div class="race-plan-container">
+                        <div class="map-container">
+                            <div id="race-map"></div>
+                        </div>
+                        
+                        <div class="race-details">
+                            <div class="form-group">
+                                <label for="race-start-time">Start Time</label>
+                                <input type="datetime-local" id="race-start-time">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="race-pace">Target Pace (min/km)</label>
+                                <input type="text" id="race-pace" placeholder="e.g., 4:30">
+                            </div>
+                            
+                            <div class="elevation-profile">
+                                <h3>Elevation Profile</h3>
+                                <div class="chart-container">
+                                    <canvas id="elevation-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Nutrition Section -->
+                <section id="nutrition">
+                    <div class="page-header">
+                        <h2>Nutrition Planning</h2>
+                    </div>
+                    
+                    <div class="nutrition-planner">
+                        <div class="nutrition-settings">
+                            <div class="form-group">
+                                <label for="carb-strategy">Carbohydrate Strategy</label>
+                                <select id="carb-strategy">
+                                    <option value="standard">Standard (60g/h)</option>
+                                    <option value="high">High (90g/h)</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="protein-intake">Protein Intake (%)</label>
+                                <input type="range" id="protein-intake" min="5" max="20" value="10">
+                                <span id="protein-value">10%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="nutrition-timeline">
+                            <h3>Hourly Nutrition Plan</h3>
+                            <div class="timeline-container">
+                                <!-- Nutrition timeline will be generated here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fluid Section -->
+                <section id="fluid">
+                    <div class="page-header">
+                        <h2>Fluid Requirements</h2>
+                    </div>
+                    
+                    <div class="fluid-calculator">
+                        <div class="input-panel">
+                            <div class="form-group">
+                                <label for="ambient-temp">Temperature (°C)</label>
+                                <input type="number" id="ambient-temp" min="-10" max="50">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="humidity-level">Humidity (%)</label>
+                                <input type="number" id="humidity-level" min="0" max="100">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sweat-rate">Sweat Rate (ml/h)</label>
+                                <input type="number" id="sweat-rate" min="100" max="2000">
+                            </div>
+                        </div>
+                        
+                        <div class="result-panel">
+                            <div class="fluid-needs">
+                                <h3>Fluid Needs</h3>
+                                <div class="result-item">
+                                    <span>Total Fluid</span>
+                                    <span id="total-fluid">0 ml</span>
+                                </div>
+                                <div class="result-item">
+                                    <span>Fluid per Hour</span>
+                                    <span id="fluid-per-hour">0 ml/h</span>
+                                </div>
+                            </div>
+                            
+                            <div class="hydration-plan">
+                                <h3>Hydration Plan</h3>
+                                <div class="chart-container">
+                                    <canvas id="hydration-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Analysis Section -->
+                <section id="analysis">
+                    <div class="page-header">
+                        <h2>Performance Analysis</h2>
+                    </div>
+                    
                     <div class="analysis-tabs">
-                        <button class="analysis-tab-btn active" data-analysis="energy">Energy Systems</button>
-                        <button class="analysis-tab-btn" data-analysis="nutrition">Nutrition Balance</button>
-                        <button class="analysis-tab-btn" data-analysis="pacing">Pacing Strategy</button>
+                        <button class="analysis-tab active" data-analysis="performance">Performance</button>
+                        <button class="analysis-tab" data-analysis="nutrition">Nutrition</button>
+                        <button class="analysis-tab" data-analysis="pacing">Pacing</button>
                     </div>
                     
-                    <div id="energy" class="analysis-content active">
-                        <div class="chart-container">
-                            <canvas id="energySystemsChart"></canvas>
+                    <div class="analysis-content">
+                        <div class="analysis-panel performance active">
+                            <div class="chart-container large">
+                                <canvas id="performance-chart"></canvas>
+                            </div>
+                            <div class="analysis-notes">
+                                <h3>Performance Insights</h3>
+                                <p id="performance-insights">
+                                    Performance analysis will be displayed here based on your training data.
+                                </p>
+                            </div>
                         </div>
-                        <div class="analysis-notes">
-                            <h3>Energy System Utilization</h3>
-                            <p>This chart shows the projected utilization of different energy systems throughout your race based on duration and intensity.</p>
-                            <div class="form-group">
-                                <label for="energy-notes">Notes</label>
-                                <textarea id="energy-notes" rows="4" placeholder="Enter your analysis notes..."></textarea>
+                        
+                        <div class="analysis-panel nutrition">
+                            <div class="chart-container large">
+                                <canvas id="nutrition-chart"></canvas>
+                            </div>
+                            <div class="analysis-notes">
+                                <h3>Nutrition Balance</h3>
+                                <p id="nutrition-insights">
+                                    Nutrition analysis will be displayed here based on your intake data.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="analysis-panel pacing">
+                            <div class="chart-container large">
+                                <canvas id="pacing-chart"></canvas>
+                            </div>
+                            <div class="analysis-notes">
+                                <h3>Pacing Strategy</h3>
+                                <p id="pacing-insights">
+                                    Pacing analysis will be displayed here based on your race plan.
+                                </p>
                             </div>
                         </div>
                     </div>
-                    
-                    <div id="nutrition" class="analysis-content">
-                        <div class="chart-container">
-                            <canvas id="nutritionBalanceChart"></canvas>
-                        </div>
-                        <div class="analysis-notes">
-                            <h3>Nutrition Balance</h3>
-                            <p>This analysis shows the balance between your nutritional intake and expenditure during the race.</p>
-                            <div class="form-group">
-                                <label for="nutrition-notes">Notes</label>
-                                <textarea id="nutrition-notes" rows="4" placeholder="Enter your analysis notes..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="pacing" class="analysis-content">
-                        <div class="chart-container">
-                            <canvas id="pacingStrategyChart"></canvas>
-                        </div>
-                        <div class="analysis-notes">
-                            <h3>Pacing Strategy</h3>
-                            <p>This pacing strategy is calculated based on your fitness level, race distance, and terrain.</p>
-                            <div class="form-group">
-                                <label for="pacing-notes">Notes</label>
-                                <textarea id="pacing-notes" rows="4" placeholder="Enter your analysis notes..."></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                </section>
+            </div>
         </main>
     </div>
 
-    <!-- Nutrition Item Modal -->
-    <div id="nutrition-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Add Nutrition Item</h2>
-            <form id="nutrition-item-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="item-name">Item Name</label>
-                        <input type="text" id="item-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="item-hour">Hour</label>
-                        <input type="number" id="item-hour" min="1" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="item-quantity">Quantity</label>
-                        <input type="number" id="item-quantity" min="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="item-carbs">Carbs (g)</label>
-                        <input type="number" id="item-carbs" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="item-calories">Calories</label>
-                        <input type="number" id="item-calories" min="0" required>
-                    </div>
-                </div>
-                <button type="submit" class="btn submit-btn">Add Item</button>
-            </form>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
-    <script src="app.js"></script>
+    <script src="/lib/mapbox-gl/mapbox-gl.js"></script>
+    <script src="/lib/chart.js/chart.min.js"></script>
+    <script src="/lib/dayjs/dayjs.min.js"></script>
+    <script src="/src/js/main.js" type="module"></script>
 </body>
 </html>
